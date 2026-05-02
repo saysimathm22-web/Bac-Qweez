@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بكالوريا الجزائر — منصة المراجعة الذكية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════
+   DESIGN SYSTEM — Algerian BAC Platform
+   Theme: Deep academic teal + warm sand
+   ════════════════════════════════════════════ */
+:root {
+  --bg:         #0F1923;
+  --bg2:        #162130;
+  --bg3:        #1C2C3E;
+  --surface:    #1E2F42;
+  --surface2:   #243549;
+  --border:     #2A3F56;
+  --border2:    #334F6A;
+
+  --teal:       #00B4A6;
+  --teal-dim:   #007D72;
+  --teal-glow:  rgba(0,180,166,0.15);
+  --gold:       #F5C842;
+  --gold-dim:   #C49A1A;
+  --gold-glow:  rgba(245,200,66,0.12);
+  --coral:      #FF6B6B;
+  --coral-dim:  #C84B4B;
+  --mint:       #52E5C0;
+
+  --text:       #E8EDF2;
+  --text2:      #8FA8BF;
+  --text3:      #5A7A96;
+  --text-inv:   #0F1923;
+
+  --easy:       #52E5A0;
+  --medium:     #F5C842;
+  --hard:       #FF6B6B;
+
+  --radius:     14px;
+  --radius-sm:  8px;
+  --radius-lg:  20px;
+  --shadow:     0 4px 20px rgba(0,0,0,0.3);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.4);
+  --glow-teal:  0 0 30px rgba(0,180,166,0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+/* Subtle background texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,180,166,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(245,200,66,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ══ NAV ══ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,25,35,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-logo-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--teal), var(--mint));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.nav-logo-text {
+  font-family: 'Amiri', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.nav-logo-text span { color: var(--teal); }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.score-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+}
+.score-pill-val { color: var(--gold); font-weight: 700; font-size: 1rem; }
+
+/* ══ PAGES ══ */
+.page { display: none; position: relative; z-index: 1; }
+.page.active { display: block; }
+
+/* ══ HOME PAGE ══ */
+.home-hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 28px 40px;
+  text-align: center;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal-glow);
+  border: 1px solid var(--teal-dim);
+  color: var(--teal);
+  padding: 6px 18px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 28px;
+  letter-spacing: 0.5px;
+}
+.hero-title {
+  font-family: 'Amiri', serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text2);
+  max-width: 540px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+}
+.hero-cta {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 60px;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; border: none;
+  transition: all 0.2s;
+}
+.btn-teal { background: var(--teal); color: var(--text-inv); }
+.btn-teal:hover { background: var(--mint); transform: translateY(-2px); box-shadow: var(--glow-teal); }
+.btn-ghost { background: transparent; color: var(--text2); border: 1.5px solid var(--border2); }
+.btn-ghost:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+.btn-gold { background: var(--gold); color: var(--text-inv); }
+.btn-gold:hover { background: #F9D966; transform: translateY(-2px); }
+.btn-danger { background: var(--coral); color: #fff; }
+.btn-danger:hover { background: #FF8585; transform: translateY(-2px); }
+
+/* ── SUBJECT GRID ── */
+.section-title {
+  font-family: 'Amiri', serif;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.section-sub { font-size: 0.88rem; color: var(--text2); margin-bottom: 28px; }
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px 60px;
+}
+.subject-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  cursor: pointer;
+  transition: all 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+.subject-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--card-color, var(--teal)) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+.subject-card:hover { border-color: var(--card-color, var(--teal)); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.subject-card:hover::before { opacity: 0.08; }
+.subject-card:hover .subject-icon { transform: scale(1.1); }
+
+.subject-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+  transition: transform 0.22s;
+}
+.subject-name { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+.subject-meta { font-size: 0.78rem; color: var(--text2); }
+.subject-count {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 100px;
+  padding: 2px 10px;
+  font-size: 0.72rem;
+  color: var(--text2);
+}
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  max-width: 700px;
+  margin: 0 auto 50px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.stat-item {
+  flex: 1;
+  padding: 20px 16px;
+  text-align: center;
+  border-left: 1px solid var(--border);
+}
+.stat-item:last-child { border-left: none; }
+.stat-val { font-size: 1.7rem; font-weight: 700; color: var(--teal); margin-bottom: 4px; }
+.stat-label { font-size: 0.75rem; color: var(--text3); }
+
+/* ══ QUIZ PAGE ══ */
+.quiz-header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.back-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.back-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+.quiz-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.meta-badge {
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.badge-subject { background: var(--teal-glow); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge-easy   { background: rgba(82,229,160,0.15); color: var(--easy); border: 1px solid rgba(82,229,160,0.3); }
+.badge-medium { background: var(--gold-glow); color: var(--gold); border: 1px solid rgba(245,200,66,0.3); }
+.badge-hard   { background: rgba(255,107,107,0.12); color: var(--coral); border: 1px solid rgba(255,107,107,0.3); }
+
+.quiz-progress-wrap { margin-right: auto; display: flex; align-items: center; gap: 12px; }
+.quiz-progress-text { font-size: 0.82rem; color: var(--text2); }
+.quiz-progress-bar {
+  width: 160px; height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--mint));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* ── QUESTION AREA ── */
+.quiz-body {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 24px;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.question-type {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.question-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dim));
+  color: var(--text-inv);
+  border-radius: 50%;
+  font-size: 0.82rem; font-weight: 700;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+.question-header { display: flex; align-items: flex-start; gap: 0; margin-bottom: 20px; }
+.question-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text);
+  flex: 1;
+}
+
+/* Document/context box */
+.doc-box {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-right: 3px solid var(--gold);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: var(--text2);
+  line-height: 1.75;
+  font-style: italic;
+}
+.doc-box-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  font-style: normal;
+}
+
+/* Options */
+.options-list { display: flex; flex-direction: column; gap: 10px; }
+.option-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.option-item:hover { border-color: var(--teal); background: var(--teal-glow); }
+.option-item.selected { border-color: var(--teal); background: var(--teal-glow); color: var(--teal); }
+.option-item.correct  { border-color: var(--easy); background: rgba(82,229,160,0.1); color: var(--easy); }
+.option-item.wrong    { border-color: var(--coral); background: rgba(255,107,107,0.1); color: var(--coral); }
+.option-item.reveal-correct { border-color: var(--easy); background: rgba(82,229,160,0.08); }
+.option-letter {
+  width: 30px; height: 30px; flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 700;
+}
+.option-item.selected .option-letter { background: var(--teal); color: var(--text-inv); }
+.option-item.correct  .option-letter { background: var(--easy); color: var(--text-inv); }
+.option-item.wrong    .option-letter { background: var(--coral); color: #fff; }
+
+/* Written answer */
+.written-wrap { position: relative; }
+.written-input {
+  width: 100%;
+  min-height: 140px;
+  padding: 16px;
+  background: var(--bg2);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius-sm);
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 0.92rem;
+  color: var(--text);
+  resize: vertical;
+  outline: none;
+  line-height: 1.7;
+  direction: rtl;
+  transition: border-color 0.15s;
+}
+.written-input:focus { border-color: var(--teal); }
+.written-input::placeholder { color: var(--text3); }
+.written-hint { font-size: 0.75rem; color: var(--text3); margin-top: 8px; }
+
+/* Feedback */
+.feedback-card {
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  margin-top: 18px;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.feedback-card.show { display: block; }
+.feedback-card.correct-fb { background: rgba(82,229,160,0.08); border: 1px solid rgba(82,229,160,0.3); }
+.feedback-card.wrong-fb   { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.3); }
+.feedback-card.info-fb    { background: var(--gold-glow); border: 1px solid rgba(245,200,66,0.3); }
+.feedback-header {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+.feedback-header.c { color: var(--easy); }
+.feedback-header.w { color: var(--coral); }
+.feedback-header.i { color: var(--gold); }
+.feedback-body { font-size: 0.88rem; color: var(--text2); line-height: 1.75; }
+.feedback-body strong { color: var(--text); }
+.model-answer {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.7;
+  border-right: 2px solid var(--gold);
+}
+
+/* Action row */
+.action-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* ── LEVEL SELECTOR ── */
+.level-page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 50px 28px;
+  text-align: center;
+}
+.level-title { font-family: 'Amiri', serif; font-size: 2rem; margin-bottom: 8px; }
+.level-sub { color: var(--text2); font-size: 0.92rem; margin-bottom: 40px; }
+.level-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.level-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 16px;
+  cursor: pointer;
+  transition: all 0.22s;
+  text-align: center;
+}
+.level-card:hover { transform: translateY(-4px); }
+.level-card.easy-card:hover { border-color: var(--easy); box-shadow: 0 8px 30px rgba(82,229,160,0.2); }
+.level-card.medium-card:hover { border-color: var(--gold); box-shadow: 0 8px 30px rgba(245,200,66,0.2); }
+.level-card.hard-card:hover { border-color: var(--coral); box-shadow: 0 8px 30px rgba(255,107,107,0.2); }
+.level-icon { font-size: 2.2rem; margin-bottom: 12px; }
+.level-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+.level-desc { font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
+.level-card.easy-card .level-name   { color: var(--easy); }
+.level-card.medium-card .level-name { color: var(--gold); }
+.level-card.hard-card .level-name   { color: var(--coral); }
+.q-count {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.easy-card .q-count   { background: rgba(82,229,160,0.12); color: var(--easy); }
+.medium-card .q-count { background: var(--gold-glow); color: var(--gold); }
+.hard-card .q-count   { background: rgba(255,107,107,0.12); color: var(--coral); }
+
+/* ── RESULTS PAGE ── */
+.results-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 50px 28px 60px;
+  text-align: center;
+}
+.result-trophy { font-size: 4rem; margin-bottom: 16px; animation: bounce 0.6s ease; }
+@keyframes bounce {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.result-title { font-family: 'Amiri', serif; font-size: 2rem; margin-bottom: 8px; }
+.result-grade {
+  font-size: 4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--teal), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 16px 0;
+}
+.result-msg { color: var(--text2); font-size: 0.95rem; margin-bottom: 40px; line-height: 1.7; }
+
+.result-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.rb-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+}
+.rb-val { font-size: 1.8rem; font-weight: 700; margin-bottom: 4px; }
+.rb-label { font-size: 0.75rem; color: var(--text3); }
+.rb-val.c { color: var(--easy); }
+.rb-val.w { color: var(--coral); }
+.rb-val.s { color: var(--gold); }
+
+.result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ── SCORE BOARD ── */
+.scoreboard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 28px;
+}
+.sb-title { font-size: 0.82rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 16px; }
+.sb-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.sb-row:last-child { border-bottom: none; }
+.sb-subj { font-size: 0.88rem; }
+.sb-scores { display: flex; gap: 10px; }
+.sb-badge {
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 12px 22px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  z-index: 500;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── LOADING ── */
+.loading {
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--text3);
+}
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .hero-title { font-size: 2.2rem; }
+  .level-cards { grid-template-columns: 1fr; }
+  .result-breakdown { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .quiz-header { gap: 10px; }
+  .quiz-progress-bar { width: 100px; }
+  .nav { padding: 0 16px; }
+  .subjects-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 380px) {
+  .subjects-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-logo-icon">🎓</div>
+    <div class="nav-logo-text">بكالوريا<span>الجزائر</span></div>
+  </div>
+  <div class="nav-right">
+    <div class="score-pill">
+      <span style="color:var(--text2);font-size:0.78rem">مجموع النقاط</span>
+      <span class="score-pill-val" id="nav-score">0</span>
+    </div>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════ PAGE: HOME ══════════════ -->
+<div id="page-home" class="page active">
+  <div class="home-hero">
+    <div class="hero-tag">✦ منصة التحضير للبكالوريا الجزائرية 2025</div>
+    <h1 class="hero-title">استعدّ للبكالوريا<br>بمستوى حقيقي</h1>
+    <p class="hero-sub">
+      أسئلة على مستوى البكالوريا الجزائرية الفعلية، بتحليل ومنهجية وتصحيح فوري ومفصّل. اختر مادتك وابدأ الآن.
+    </p>
+    <div class="hero-cta">
+      <button class="btn btn-teal" onclick="document.getElementById('subjects-section').scrollIntoView({behavior:'smooth'})">
+        📚 اختر مادة وابدأ
+      </button>
+      <button class="btn btn-ghost" onclick="showScoreboard()">
+        📊 سجل نتائجي
+      </button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-val">8</div><div class="stat-label">مواد</div></div>
+      <div class="stat-item"><div class="stat-val">+160</div><div class="stat-label">سؤال بكالوريا</div></div>
+      <div class="stat-item"><div class="stat-val">3</div><div class="stat-label">مستويات</div></div>
+      <div class="stat-item"><div class="stat-val">100%</div><div class="stat-label">مجاني</div></div>
+    </div>
+  </div>
+
+  <div id="subjects-section" style="max-width:1100px;margin:0 auto;padding:0 28px 20px;">
+    <div class="section-title">اختر مادتك</div>
+    <div class="section-sub">كل مادة تحتوي على أسئلة تحليلية بمستوى البكالوريا الجزائرية الحقيقية</div>
+  </div>
+
+  <div class="subjects-grid" id="subjects-grid">
+    <!-- Injected by JS -->
+  </div>
+
+  <!-- Scoreboard modal area -->
+  <div id="scoreboard-section" style="display:none;max-width:700px;margin:0 auto;padding:0 28px 60px;">
+    <div class="scoreboard">
+      <div class="sb-title">سجل نتائجي</div>
+      <div id="sb-content"></div>
+    </div>
+    <button class="btn btn-ghost" onclick="document.getElementById('scoreboard-section').style.display='none'">إغلاق</button>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE: LEVEL ══════════════ -->
+<div id="page-level" class="page">
+  <div class="level-page">
+    <div id="level-subject-icon" style="font-size:3rem;margin-bottom:12px"></div>
+    <h2 class="level-title" id="level-subject-name">اختر المستوى</h2>
+    <p class="level-sub">حدد مستوى الصعوبة الذي تريد التدرب عليه</p>
+    <div class="level-cards">
+      <div class="level-card easy-card" onclick="startQuiz('easy')">
+        <div class="level-icon">🌱</div>
+        <div class="level-name">سهل</div>
+        <div class="level-desc">أسئلة مفاهيمية وأساسية للتعرف على المادة</div>
+        <div class="q-count" id="lc-easy">20 سؤال</div>
+      </div>
+      <div class="level-card medium-card" onclick="startQuiz('medium')">
+        <div class="level-icon">⚡</div>
+        <div class="level-name">متوسط</div>
+        <div class="level-desc">أسئلة تطبيقية تتطلب فهماً وتحليلاً</div>
+        <div class="q-count" id="lc-medium">20 سؤال</div>
+      </div>
+      <div class="level-card hard-card" onclick="startQuiz('hard')">
+        <div class="level-icon">🔥</div>
+        <div class="level-name">بكالوريا</div>
+        <div class="level-desc">مستوى البكالوريا الجزائرية الحقيقي</div>
+        <div class="q-count" id="lc-hard">20 سؤال</div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-ghost" onclick="showPage('home')">← العودة للمواد</button>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE: QUIZ ══════════════ -->
+<div id="page-quiz" class="page">
+  <div class="quiz-header">
+    <button class="back-btn" onclick="confirmExit()">← خروج</button>
+    <div class="quiz-meta">
+      <span class="meta-badge badge-subject" id="qh-subject">المادة</span>
+      <span class="meta-badge" id="qh-level">المستوى</span>
+    </div>
+    <div class="quiz-progress-wrap">
+      <span class="quiz-progress-text" id="qh-progress">1 / 10</span>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="qh-bar" style="width:10%"></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-body" id="quiz-body">
+    <!-- Injected by JS -->
+  </div>
+</div>
+
+<!-- ══════════════ PAGE: RESULTS ══════════════ -->
+<div id="page-results" class="page">
+  <div class="results-page" id="results-body">
+    <!-- Injected by JS -->
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════════
+//  QUESTION BANK — Algerian BAC Level
+//  Structure: QUESTIONS[subject][level] = [ ...questions ]
+//  Types: 'qcm' | 'written'
+// ════════════════════════════════════════════════════════════════════
+
+const QUESTIONS = {
+
+// ─────────────────────────────────────────────────────────────────────
+// 1. MATHEMATICS
+// ─────────────────────────────────────────────────────────────────────
+math: {
+  easy: [
+    { type:'qcm', q:'ما هو مشتق الدالة f(x) = 3x² − 5x + 2؟', opts:['6x − 5','3x − 5','6x + 2','3x²'], ans:0, exp:'المشتق: f\'(x) = 2×3x − 5 = 6x − 5 (باستخدام قاعدة القدرة وخطية المشتق).' },
+    { type:'qcm', q:'حل المعادلة: x² − 9 = 0', opts:['x = ±3','x = 3','x = −3','x = ±9'], ans:0, exp:'x² = 9 ⟹ x = ±√9 = ±3' },
+    { type:'qcm', q:'ما قيمة log₁₀(100)؟', opts:['2','10','0.01','1'], ans:0, exp:'log₁₀(100) = log₁₀(10²) = 2. الأساس 10 مرفوع للقوة 2 يعطي 100.' },
+    { type:'qcm', q:'إذا كانت sin(30°) = 1/2، فما قيمة cos(60°)؟', opts:['1/2','√3/2','1','0'], ans:0, exp:'cos(60°) = cos(90°−30°) = sin(30°) = 1/2. العلاقة التكاملية تربط الجيب وجيب التمام.' },
+    { type:'qcm', q:'مجموع حدود متتالية هندسية ذات أساس r=2 وحد أول a=1 ومكونة من 5 حدود هو:', opts:['31','32','30','16'], ans:0, exp:'S = a(rⁿ−1)/(r−1) = 1×(2⁵−1)/(2−1) = (32−1)/1 = 31' },
+    { type:'qcm', q:'نهاية الدالة lim(x→∞) (3x+1)/x تساوي:', opts:['3','1','∞','0'], ans:0, exp:'(3x+1)/x = 3 + 1/x. عندما x→∞ فإن 1/x → 0، إذن النهاية = 3.' },
+    { type:'written', q:'أثبت أن المتتالية (Uₙ) المعرفة بـ Uₙ = 2n+3 هي متتالية حسابية وحدد أساسها وحدها الأول.', modelAns:'نحسب Uₙ₊₁ − Uₙ = [2(n+1)+3] − [2n+3] = 2n+5 − 2n−3 = 2 (ثابت لا يعتمد على n). إذن المتتالية حسابية بأساس r = 2. الحد الأول: U₀ = 2×0+3 = 3.', keyWords:['حسابية','أساس','2','ثابت'] },
+    { type:'qcm', q:'نتيجة العملية: ∫₀¹ 2x dx', opts:['1','2','0','4'], ans:0, exp:'∫ 2x dx = x² + C. التطبيق: [x²]₀¹ = 1² − 0² = 1.' },
+    { type:'qcm', q:'قيمة التعبير: C(5,2) (التوافيق)', opts:['10','20','5','15'], ans:0, exp:'C(5,2) = 5!/(2!×3!) = (5×4)/(2×1) = 10.' },
+    { type:'qcm', q:'ما هو معكوس المصفوفة A = [[1,0],[0,1]]؟', opts:['[[1,0],[0,1]]','[[0,1],[1,0]]','[[−1,0],[0,−1]]','لا وجود له'], ans:0, exp:'المصفوفة الوحدة I هي معكوس نفسها: I × I = I.' },
+  ],
+  medium: [
+    { type:'written', q:'الدالة f(x) = x³ − 3x + 2. ادرس تغيرات الدالة وحدد نقاط الانعطاف واقرأ الجدول.', modelAns:'f\'(x) = 3x² − 3 = 3(x²−1) = 3(x−1)(x+1). الجذور: x=−1 (أعظمي) و x=1 (أصغري). f(−1)=4 و f(1)=0. نقطة الانعطاف: f\'\'(x)=6x ⟹ x=0. جدول التغيرات يُظهر تناقصاً على [−1,1] وتزايداً خارجه.', keyWords:['مشتق','أعظمي','أصغري','انعطاف','جدول'] },
+    { type:'qcm', q:'إذا كان ln(x) = 3، فما قيمة x؟', opts:['e³','3e','e⁻³','log(3)'], ans:0, exp:'ln(x) = 3 ⟺ x = e³ ≈ 20.09. الدالة اللوغاريتمية الطبيعية هي عكس الأسية.' },
+    { type:'qcm', q:'قيمة المتكامل: ∫₀^π sin(x) dx', opts:['2','0','1','π'], ans:0, exp:'[−cos(x)]₀^π = −cos(π)−(−cos(0)) = −(−1)−(−1) = 1+1 = 2.' },
+    { type:'written', q:'مثّل بيانياً الدالة f(x) = eˣ − x − 1 وبيّن إشارتها على ℝ.', modelAns:'f\'(x) = eˣ − 1. f\'(x)=0 ⟺ eˣ=1 ⟺ x=0. f(0) = 1−0−1 = 0. f\'\'(0) = e⁰ = 1 > 0 ⟹ x=0 أصغري مطلق. إذن f(x) ≥ f(0) = 0 لكل x∈ℝ، أي f(x) ≥ 0.', keyWords:['مشتق','أصغري','إشارة','موجبة'] },
+    { type:'qcm', q:'مجموعة حلول |2x−3| ≤ 5', opts:['[−1,4]','(−∞,−1]∪[4,+∞)','[−1,+∞)','[0,4]'], ans:0, exp:'|2x−3| ≤ 5 ⟺ −5 ≤ 2x−3 ≤ 5 ⟺ −2 ≤ 2x ≤ 8 ⟺ −1 ≤ x ≤ 4.' },
+    { type:'qcm', q:'في فضاء الأحداث Ω={1,2,3,4,5,6}، P(A∪B) إذا كانت P(A)=1/2 وP(B)=1/3 وA,B مستقلتان:', opts:['2/3','5/6','1/6','1/2'], ans:0, exp:'P(A∩B) = P(A)×P(B) = 1/6. P(A∪B) = 1/2+1/3−1/6 = 3/6+2/6−1/6 = 4/6 = 2/3.' },
+    { type:'written', q:'أثبت بالتراجع أن: ∀n∈ℕ، 1+2+3+...+n = n(n+1)/2', modelAns:'القاعدة (n=1): 1 = 1×2/2 = 1 ✓. الخطوة: نفترض صحتها لـ n، نثبتها لـ n+1. 1+2+...+n+(n+1) = n(n+1)/2 + (n+1) = (n+1)(n/2+1) = (n+1)(n+2)/2. وهي الصيغة المطلوبة لـ n+1.', keyWords:['القاعدة','الخطوة','التراجع','نفترض'] },
+    { type:'qcm', q:'ما معادلة المماس لمنحنى f(x) = x² عند x=2؟', opts:['y = 4x−4','y = 2x−4','y = 4x+4','y = x+2'], ans:0, exp:'f\'(x) = 2x، f\'(2) = 4 (الميل). f(2) = 4. المماس: y−4 = 4(x−2) ⟹ y = 4x−4.' },
+    { type:'qcm', q:'إذا كانت المصفوفتان A وB من الرتبة 2×2 وdet(A)=3 و det(B)=2، فإن det(AB)=', opts:['6','5','1.5','لا يمكن حسابها'], ans:0, exp:'الخاصية: det(AB) = det(A)×det(B) = 3×2 = 6.' },
+    { type:'written', q:'احسب نهاية الدالة: lim(x→0) sin(x)/x وفسّر الناتج هندسياً.', modelAns:'بالقاعدة المعروفة: lim(x→0) sin(x)/x = 1. تفسير هندسي: مع اقتراب الزاوية x من الصفر، تقترب قوسها من وترها، أي sin(x) ≈ x للزوايا الصغيرة.', keyWords:['1','النهاية','الزوايا الصغيرة'] },
+  ],
+  hard: [
+    { type:'written', q:'[بكالوريا] الدالة f معرفة على ]0,+∞[ بـ: f(x) = x − 1 − ln(x). ادرس دراسة كاملة وارسم المنحنى (التحديب، المقاربات، التغيرات، القيم الخاصة).', modelAns:'1) ح.تع: ]0,+∞[. 2) حدود: lim(x→0⁺) = +∞ (مقاربة رأسية x=0). lim(x→+∞) = +∞. 3) f\'(x) = 1−1/x = (x−1)/x. f\'(x)<0 على ]0,1[ وf\'(x)>0 على ]1,+∞[. أصغري f(1)=0. 4) f\'\'(x) = 1/x² > 0 دائماً (محدب نحو الأسفل). 5) f(x)≥0 دائماً مع تساوٍ عند x=1.', keyWords:['مشتق','أصغري','حدود','مقاربة','تحديب','f(1)=0'] },
+    { type:'written', q:'[بكالوريا] خذ المعادلة التفاضلية: y\' − 2y = eˣ. أوجد الحل العام ثم الحل الخاص الذي يحقق y(0) = 1.', modelAns:'الحل المتجانس: y\' = 2y ⟹ yₕ = Ce²ˣ. حل خاص بالمتغير الثابت: يُجرّب yₚ = Aeˣ ⟹ Aeˣ−2Aeˣ = eˣ ⟹ −A = 1 ⟹ A=−1. يₚ = −eˣ. الحل العام: y = Ce²ˣ − eˣ. الشرط y(0)=1: C−1=1 ⟹ C=2. الحل الخاص: y = 2e²ˣ − eˣ.', keyWords:['متجانس','Ce²ˣ','خاص','C=2','2e²ˣ'] },
+    { type:'written', q:'[بكالوريا] كرة عشوائية تُختار من صندوق يحتوي 4 بيضاء و6 حمراء. تُسحب 3 كرات بالتتابع دون إرجاع. احسب: أ) P(3 بيضاء). ب) P(2 بيضاء وواحدة حمراء). ج) P(الكرة الثالثة بيضاء علماً بأن الأولى بيضاء والثانية حمراء).', modelAns:'الإجمالي: C(10,3)=120. أ) C(4,3)/120 = 4/120 = 1/30. ب) C(4,2)×C(6,1)/120 = 6×6/120 = 36/120 = 3/10. ج) P(B|BH) = P(B∩BH)/P(BH). P(BHB) = (4/10)(6/9)(3/8) = 72/720 = 1/10. P(BH?) = (4/10)(6/9) = 24/90 = 4/15. P = (1/10)/(4/15) = 15/40 = 3/8.', keyWords:['توافيق','1/30','3/10','3/8','دون إرجاع'] },
+    { type:'qcm', q:'[بكالوريا] مجموعة حلول المعادلة eˣ + e⁻ˣ = 2 على ℝ هي:', opts:['{0}','ℝ','∅','{1,−1}'], ans:0, exp:'eˣ+e⁻ˣ ≥ 2 (بمتراجحة المتوسط الحسابي والهندسي) مع تساوٍ عند x=0 فقط. إذن الحل الوحيد هو x=0.' },
+    { type:'written', q:'[بكالوريا] في الفضاء المنسوب، A=(1,0,0), B=(0,1,0), C=(0,0,1). أوجد معادلة المستوى (ABC) ثم المسافة من النقطة D=(1,1,1) إلى هذا المستوى.', modelAns:'المتجه AB=(−1,1,0) والمتجه AC=(−1,0,1). الشعاع الطبيعي n=AB∧AC=(1,1,1). معادلة المستوى: 1(x−1)+1(y)+1(z) = 0 ⟹ x+y+z = 1. المسافة من D=(1,1,1): d = |1+1+1−1|/√3 = 2/√3 = 2√3/3.', keyWords:['طبيعي','x+y+z=1','2√3/3','حاصل اتجاهي'] },
+    { type:'qcm', q:'[بكالوريا] الحد العام للمتتالية المعرفة بـ U₁=1 و Uₙ₊₁ = 2Uₙ+1 (بعد تحويل Vₙ = Uₙ+1) هو:', opts:['2ⁿ⁺¹−1','2ⁿ−1','2ⁿ+1','n·2ⁿ'], ans:0, exp:'Vₙ = Uₙ+1. Vₙ₊₁ = Uₙ₊₁+1 = 2Uₙ+2 = 2Vₙ (هندسية أساسها 2). V₁=U₁+1=2. Vₙ=2·2ⁿ⁻¹=2ⁿ. Uₙ = 2ⁿ−1. U₁=2¹−1=1 ✓. إذن Uₙ=2ⁿ−1، وU_{n+1}=2^{n+1}−1.' },
+    { type:'written', q:'[بكالوريا] ادرس اتقارب المتسلسلة Σ(1/n²) بمقارنتها مع دالة مناسبة وبيّن لماذا تتقارب.', modelAns:'نقارن 1/n² مع ∫ₙ^∞ 1/x² dx = 1/n (تناقص). بمعيار التكامل: ∫₁^∞ 1/x² dx = [−1/x]₁^∞ = 1 متقاربة. بما أن 0 < 1/n² ≤ 1/(n(n−1)) والأخيرة متقاربة (مجموعها تلسكوبي = 1)، فالمتسلسلة تتقارب. مجموعها = π²/6.', keyWords:['تكامل','متقاربة','معيار','π²/6'] },
+    { type:'qcm', q:'[بكالوريا] عدد الحلول الصحيحة للمعادلة sin(x) = x في فترة [−2π, 2π]:', opts:['1','3','2','∞'], ans:0, exp:'sin(x)=x تتحقق فقط عند x=0 (الحل الوحيد). الدالة sin(x)−x تناقصية دائماً (مشتقها cos(x)−1 ≤ 0) مع تعادل ساد بالصفر فقط.' },
+    { type:'written', q:'[بكالوريا] باستخدام قاعدة لوبيتال أو التطورات المحدودة، احسب: lim(x→0) (1−cos(x))/x²', modelAns:'تطبيق قاعدة لوبيتال مرتين: lim sin(x)/(2x) = lim cos(x)/2 = 1/2. أو بالتطور: 1−cos(x) = x²/2 − x⁴/24+... إذن (1−cos(x))/x² → 1/2.', keyWords:['لوبيتال','1/2','تطور','cos'] },
+    { type:'qcm', q:'[بكالوريا] إذا كانت f دالة قابلة للاشتقاق على ℝ وf(0)=1 و f\'(0)=2 وf\'\'(0)=−4، فتطورها المحدود من الدرجة 2 عند 0 هو:', opts:['1+2x−2x²','1+2x−4x²','1−2x+2x²','2x−2x²'], ans:0, exp:'التطور المحدود: f(x)≈f(0)+f\'(0)x+f\'\'(0)/2!·x² = 1+2x+(−4/2)x² = 1+2x−2x².' },
+  ]
+},
+
+// ─────────────────────────────────────────────────────────────────────
+// 2. PHYSICS & CHEMISTRY
+// ─────────────────────────────────────────────────────────────────────
+physics: {
+  easy: [
+    { type:'qcm', q:'جسم كتلته 5 كغ يتسارع بـ 4 م/ث². ما القوة المؤثرة عليه (قانون نيوتن الثاني)؟', opts:['20 N','9 N','1.25 N','0.8 N'], ans:0, exp:'القانون الثاني لنيوتن: F = m×a = 5×4 = 20 N.' },
+    { type:'qcm', q:'ما وحدة قياس الشحنة الكهربائية في النظام الدولي؟', opts:['كولوم (C)','أمبير (A)','فولط (V)','أوم (Ω)'], ans:0, exp:'وحدة الشحنة هي الكولوم (C). الأمبير هو وحدة التيار = كولوم/ثانية.' },
+    { type:'qcm', q:'الموجة الصوتية تنتقل في الهواء بسرعة 340 م/ث. إذا كان ترددها 680 Hz، فما طول الموجة؟', opts:['0.5 م','2 م','340 م','1 م'], ans:0, exp:'λ = v/f = 340/680 = 0.5 م. العلاقة: السرعة = التردد × طول الموجة.' },
+    { type:'qcm', q:'ما قانون أوم الذي يربط التوتر والتيار والمقاومة؟', opts:['U = R×I','U = I/R','R = U×I','I = R×U'], ans:0, exp:'قانون أوم: U = R×I حيث U التوتر (V)، R المقاومة (Ω)، I التيار (A).' },
+    { type:'qcm', q:'الطاقة الحركية لجسم كتلته 2 كغ يتحرك بسرعة 10 م/ث تساوي:', opts:['100 J','20 J','200 J','10 J'], ans:0, exp:'Ec = ½mv² = ½×2×100 = 100 J.' },
+    { type:'written', q:'اشرح قانون حفظ الطاقة وأعطِ مثالاً تطبيقياً من الحياة اليومية.', modelAns:'قانون حفظ الطاقة: الطاقة لا تُخلق ولا تُفنى بل تتحول من شكل لآخر. الطاقة الكلية في نظام معزول ثابتة. مثال: كرة تسقط تحول طاقتها الوضعية (mgh) إلى طاقة حركية (½mv²). عند الأرض: mgh = ½mv² ⟹ v = √(2gh).', keyWords:['تتحول','ثابتة','وضعية','حركية'] },
+    { type:'qcm', q:'في الشبكة الكهربائية المتوازية، التوتر على كل مقاومة:', opts:['يساوي توتر المولد','يتوزع على المقاومات','يتضاعف','يساوي الصفر'], ans:0, exp:'في الشبكة المتوازية: التوتر على كل فرع يساوي توتر المولد. التيار هو الذي يتوزع.' },
+    { type:'qcm', q:'من بين هذه الإشعاعات، أيها أقصر طولاً موجياً (أعلى طاقة)؟', opts:['أشعة غاما (γ)','أشعة X','فوق البنفسجية','ضوء مرئي'], ans:0, exp:'الطيف الكهرومغناطيسي: γ (أقصر طول موجي وأعلى طاقة) ← X ← فوق البنفسجية ← مرئي ← تحت الحمراء ← راديو.' },
+  ],
+  medium: [
+    { type:'written', q:'جسم كتلته 0.5 كغ مُعلَّق بنابض ثابت مرونته k=50 N/م. وُضع الجسم عند مسافة 10 سم من وضع التوازن وأُطلق بدون سرعة ابتدائية. احسب: أ) تردد التذبذبات. ب) المعادلة التفاضلية التي يحكم حركة الجسم.', modelAns:'أ) ω₀ = √(k/m) = √(50/0.5) = √100 = 10 rad/s. f = ω₀/2π ≈ 1.59 Hz. ب) بتطبيق قانون نيوتن: m×x\'\' = −kx ⟹ x\'\' + (k/m)x = 0 ⟹ x\'\' + 100x = 0. الحل: x(t) = 0.1×cos(10t) م.', keyWords:['ω₀','10','التفاضلية','cos','تردد'] },
+    { type:'qcm', q:'تفاعل تحييد بين حمض قوي وقاعدة قوية: pH المحلول الناتج؟', opts:['7','أقل من 7','أكبر من 7','يعتمد على التركيز'], ans:0, exp:'تفاعل حمض قوي + قاعدة قوية عند التكافؤ ينتج ماء وملح لا يؤثر على pH. إذن pH = 7 (متعادل).' },
+    { type:'written', q:'محلول حمض الأسيتيك (Ka = 1.8×10⁻⁵) تركيزه 0.1 مول/لتر. احسب درجة تأين الحمض ودرجة الـ pH.', modelAns:'[H₃O⁺]² = Ka×C = 1.8×10⁻⁵×0.1 = 1.8×10⁻⁶. [H₃O⁺] = √(1.8×10⁻⁶) ≈ 1.34×10⁻³ مول/لتر. pH = −log(1.34×10⁻³) ≈ 2.87. درجة التأين: α = [H₃O⁺]/C = 1.34×10⁻³/0.1 ≈ 1.34%.', keyWords:['Ka','1.34','pH','2.87','تأين'] },
+    { type:'qcm', q:'في دائرة RLC على التوالي عند الرنين، المعاوقة الكلية تساوي:', opts:['R فقط','R+L+C','√(R²+(XL−XC)²)','XL+XC'], ans:0, exp:'عند الرنين: XL = XC، إذن Z = √(R²+(XL−XC)²) = √(R²+0) = R. المعاوقة تساوي المقاومة النشطة فقط.' },
+    { type:'written', q:'حدد عدد الأكسدة لكل عنصر في: KMnO₄ ثم بيّن ما إذا كان Mn يمكن أن يتأكسد أو يختزل في تفاعلات ردوكس.', modelAns:'K: +1. O: −2. 4×(−2) = −8. المجموع = 0 ⟹ +1+Mn−8 = 0 ⟹ Mn = +7. Mn في حالة أكسدة عالية (+7 هو الأعلى الشائع)، لذا يعمل كعامل مؤكسِد ويختزل إلى Mn²⁺ أو MnO₂.', keyWords:['+7','K=+1','مؤكسد','يختزل'] },
+    { type:'qcm', q:'العدد الذري للكربون 12C هو 6. كم عدد النيوترونات في نواته؟', opts:['6','12','18','0'], ans:0, exp:'العدد الكتلي A=12، العدد الذري Z=6. عدد النيوترونات = A−Z = 12−6 = 6.' },
+  ],
+  hard: [
+    { type:'written', q:'[بكالوريا — فيزياء] حلقة ذات مقاومة R=10Ω وحثية L=0.1H مربوطة بمولد توتر متردد u(t)=220√2·cos(100πt) V. أوجد: أ) قيمة XL. ب) شدة التيار الفعالة. ج) الزاوية (déphasage) بين u و i.', modelAns:'أ) XL = Lω = 0.1×100π ≈ 31.4 Ω. ب) Z = √(R²+XL²) = √(100+986) ≈ 32.9 Ω. Ieff = Ueff/Z = 220/32.9 ≈ 6.7 A. ج) φ = arctan(XL/R) = arctan(31.4/10) ≈ 72.3° (التيار يتأخر عن التوتر).', keyWords:['XL','31.4','Z','6.7','72','يتأخر'] },
+    { type:'written', q:'[بكالوريا — كيمياء] 1 لتر من محلول حمض الهيدروكلوريك HCl تركيزه 0.2 مول/لتر خُلط مع 1 لتر من محلول NaOH تركيزه 0.1 مول/لتر. احسب: أ) pH المزيج. ب) ما هو الكاشف الملون الأنسب لهذا التفاعل وتفسير اختيارك.', modelAns:'مولات HCl = 0.2 مول، مولات NaOH = 0.1 مول. HCl الزائد = 0.1 مول في حجم 2 لتر. [H₃O⁺] = 0.1/2 = 0.05 مول/لتر. pH = −log(0.05) = 1.3. الكاشف: الميثيل البرتقالي (تحول لوني عند pH 3.1–4.4) أو البروموكريسول الأخضر. المحلول حمضي قوياً.', keyWords:['0.05','pH','1.3','زائد','كاشف'] },
+    { type:'written', q:'[بكالوريا] نواة اليورانيوم ²³⁸U تنشطر إلى ²³⁵U بانبعاث جسيم ألفا. اكتب معادلة الانشطار ثم احسب طاقة الانبعاث إذا علمت أن: m(²³⁸U)=238.0508u، m(²³⁵U)=234.0436u، m(α)=4.0026u، والوحدة u=931.5 MeV/c².', modelAns:'المعادلة: ²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He. فقدان الكتلة: Δm = 238.0508 − (234.0436+4.0026) = 0.0046 u. الطاقة: E = 0.0046 × 931.5 ≈ 4.28 MeV.', keyWords:['Th','ألفا','4.28','Δm','0.0046'] },
+    { type:'qcm', q:'[بكالوريا] الكثافة البصرية D لمحلول عند طول موجي معين تُعطى بـ D = log(I₀/I). إذا كانت D=2، فإن نسبة الشدة المنقولة إلى الشدة الواردة (I/I₀):', opts:['1%','0.1%','10%','50%'], ans:0, exp:'D = log(I₀/I) = 2 ⟹ I₀/I = 100 ⟹ I/I₀ = 1/100 = 1%.' },
+    { type:'written', q:'[بكالوريا] مكثف سعته C=100μF شُحن حتى جهد U₀=10V ثم وُصل بملف مثالي حثيته L=10mH. اكتب معادلة التطور الزمني لشحنة المكثف وحدد تردد التذبذبات.', modelAns:'الطاقة محفوظة: ½LI²+q²/(2C) = const. المعادلة: q\'\'+(1/LC)q = 0. ω₀ = 1/√(LC) = 1/√(10⁻²×10⁻⁴) = 1/10⁻³ = 1000 rad/s. f₀ = 1000/2π ≈ 159 Hz. q(t) = CU₀cos(ω₀t) = 10⁻³cos(1000t) C.', keyWords:['1/√LC','1000','159','cos','q(t)'] },
+  ]
+},
+
+// ─────────────────────────────────────────────────────────────────────
+// 3. NATURAL SCIENCES
+// ─────────────────────────────────────────────────────────────────────
+sciences: {
+  easy: [
+    { type:'qcm', q:'ما هي وحدة البناء الأساسية للكائنات الحية؟', opts:['الخلية','الذرة','الجين','البروتين'], ans:0, exp:'الخلية هي الوحدة الهيكلية والوظيفية الأساسية لكل الكائنات الحية. نظرية الخلية تُعدّ من أركان علم الأحياء.' },
+    { type:'qcm', q:'أين يجري التخليق الضوئي في خلية النبات؟', opts:['البلاستيدة الخضراء','الميتوكوندريا','النواة','الشبكة الإندوبلازمية'], ans:0, exp:'البلاستيدة الخضراء (Chloroplaste) تحتوي على الكلوروفيل وهي موضع التخليق الضوئي.' },
+    { type:'qcm', q:'الجزيء المسؤول عن نقل الصفات الوراثية من الآباء إلى الأبناء هو:', opts:['DNA','RNA','بروتين','ATP'], ans:0, exp:'حمض النووي DNA يحمل المعلومات الوراثية المشفرة في تسلسل الأسس النيتروجينية.' },
+    { type:'qcm', q:'كم كروموسوماً يحتوي الخلية الجسدية لدى الإنسان؟', opts:['46','23','92','48'], ans:0, exp:'الخلية الجسدية الإنسانية ثنائية الصيغة (2n=46): 23 زوجاً من الكروموسومات.' },
+    { type:'written', q:'اشرح الفرق بين التنفس الهوائي واللاهوائي مع ذكر مكان حدوث كل منهما.', modelAns:'التنفس الهوائي: يحتاج أكسجيناً، يجري في الميتوكوندريا، يُنتج 36-38 ATP لكل جلوكوز: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O. التنفس اللاهوائي: لا يحتاج O₂، يجري في السيتوبلازما، ينتج فقط 2 ATP، ينتج حمض اللاكتيك أو الإيثانول. الكفاءة الهوائية أعلى بكثير.', keyWords:['ميتوكوندريا','ATP','أكسجين','لاكتيك','36'] },
+  ],
+  medium: [
+    { type:'written', q:'[تحليل وثيقة] أثناء تجربة، لاحظ العلماء أن بعض الأنسجة السرطانية تفقد جين p53. اشرح دور هذا الجين طبيعياً وكيف يفسر فقدانه نمو الخلايا السرطانية.', modelAns:'الجين p53 يُشفّر بروتيناً يُعدّ "حارس الجينوم": يوقف دورة الخلية إذا اكتشف خللاً في DNA، ويُطلق أبوبتوسيس (انتحار الخلية) عند الضرورة. فقدانه يجعل الخلايا التالفة تنقسم دون رقابة ← نمو ورمي غير منضبط. هذا يفسر لماذا يُعدّ p53 من أكثر الجينات الكابتة للورم تضرراً في السرطانات.', keyWords:['p53','أبوبتوسيس','دورة','كابت','ورم'] },
+    { type:'qcm', q:'في انقسام الخيطي (Mitose)، ما عدد الخلايا الناتجة وما ضيغتها الصبغية إذا كانت الخلية الأم 2n=46؟', opts:['خليتان 2n=46','4 خلايا n=23','خليتان n=23','خلية واحدة 4n=92'], ans:0, exp:'الانقسام الخيطي ينتج خليتين ابنتيتين متطابقتين للأم: 2n=46.' },
+    { type:'written', q:'ارسم مخططاً تفصيلياً لمراحل الانقسام الاختزالي (Méiose) مع بيان الأهمية البيولوجية لكل مرحلة.', modelAns:'Méiose I: 1) التمهيدي I: تعديل الصبغيات المتماثلة، تبادل مقاطع (Crossing-over) → تنوع وراثي. 2) الاستوائي I: تصف الثنائيات. 3) الانفصالي I: فصل المتماثلات → n مضاعف الصبغيات. 4) النهائي I. Méiose II: مشابه للانقسام الخيطي. النتيجة: 4 خلايا n (أمشاج).', keyWords:['Crossing-over','n','أمشاج','Méiose I','Méiose II','تنوع'] },
+    { type:'qcm', q:'ما الدور الوظيفي للريبوزوم في الخلية؟', opts:['تركيب البروتينات','إنتاج ATP','تخزين الوراثة','هضم الجزيئات'], ans:0, exp:'الريبوزومات هي موضع تركيب البروتينات (الترجمة). توجد حرة أو مرتبطة بالشبكة الإندوبلازمية الخشنة.' },
+    { type:'written', q:'تحدث عن المناعة المكتسبة مع التمييز بين استجابة B (خلطية) وT (خلوية).', modelAns:'الاستجابة الخلطية (B): خلايا B تتحول إلى بلازمية تُفرز أجساماً مضادة (Ig) تتحد مع المستضد → معادلته. الاستجابة الخلوية (T): خلايا T سامة تدمر الخلايا المصابة بالفيروسات مباشرة. كلتاهما تنتج خلايا ذاكرة لاستجابة أسرع لاحقاً.', keyWords:['أجسام مضادة','B','T','خلوية','ذاكرة','بلازمية'] },
+  ],
+  hard: [
+    { type:'written', q:'[بكالوريا — وثيقة] المعطيات: تجربة Meselson-Stahl (1958): خلايا E.coli نمت على وسط يحتوي ¹⁵N (ثقيل) ثم نُقلت إلى وسط ¹⁴N (خفيف). بالطرد المركزي: الجيل الأول → DNA هجين. الجيل الثاني → 50% هجين + 50% خفيف. فسّر هذه النتائج واستنتج نمط تضاعف DNA.', modelAns:'النتائج تدعم نموذج التضاعف شبه المحافظ (Semi-conservatif): DNA الأصلي (¹⁵N/¹⁵N) ينفصل خيطاه، كل خيط يعمل قالباً لتوليف خيط جديد (¹⁴N). الجيل 1: كل جزيء = ¹⁵N/¹⁴N (هجين). الجيل 2: جزيئان هجينان + جزيئان ¹⁴N/¹⁴N. يُستبعد النموذج المحافظ والتشتيتي.', keyWords:['شبه محافظ','هجين','¹⁵N','¹⁴N','قالب','ينفصل'] },
+    { type:'written', q:'[بكالوريا] اشرح تدفق المعلومات الوراثية (الدوغما المركزية) من DNA إلى البروتين، مع ذكر إنزيمات كل مرحلة ومكانها في الخلية.', modelAns:'1) الاستنساخ (Transcription): في النواة. قالب: خيط DNA. المنتج: mRNA. الإنزيم: RNA بوليميراز. 2) الترجمة (Translation): في الريبوزومات (سيتوبلازما). qالرنا المراسل يُقرأ 3 قواعد (كودون) في كل مرة. tRNA يحمل الأحماض الأمينية. المنتج: بروتين. الاتجاه: 5\'→3\'.', keyWords:['استنساخ','ترجمة','RNA بوليميراز','كودون','tRNA','نواة','ريبوزوم'] },
+    { type:'qcm', q:'[بكالوريا] جزيء DNA طوله 3400 Å ويتكون من 34% أدنين. كم عدد جزيئات السيتوزين؟', opts:['800','1000','400','1600'], ans:0, exp:'عدد الأزواج = 3400/3.4 = 1000 زوج ⟹ 2000 نيكليوتيد. A=34% ⟹ T=34%. C=G=(100−68)/2=16%. عدد C = 16% × 2000 = 320. (ملاحظة: بعض الصياغات تختلف حسب الكتاب، المنطق = قاعدة شارغاف.)' },
+    { type:'written', q:'[بكالوريا — مرض وراثي] طفل مصاب بالتليف الكيسي (وراثة صاميتة متنحية). كلا الوالدين سليمان. ارسم شجرة النسب وحدد الأنماط الوراثية المحتملة للأبوين ونسبة خطر الإنجاب بأطفال مصابين.', modelAns:'الرمز: a=مرض (متنحي), A=سليم. المريض: aa. الوالدان سليمان لكن لديهم طفل مريض ⟹ كلاهما حامل: Aa. شجرة النسب: Aa × Aa → 1/4 AA (سليم), 2/4 Aa (حامل), 1/4 aa (مريض). خطر الإنجاب بطفل مصاب = 25%.', keyWords:['Aa','aa','متنحي','25%','شجرة','حامل'] },
+    { type:'written', q:'[بكالوريا] قارن بين مناعة المصل (سيرم) ومناعة اللقاح من حيث: الآلية، السرعة، المدة، الاستخدام الطبي.', modelAns:'مناعة المصل (Passive/Sérothérapie): حقن أجسام مضادة جاهزة. سريعة جداً لكن مؤقتة (أسابيع). تُستخدم في حالات الطوارئ (لدغات، تسمم). اللقاح (Active/Vaccination): تحفيز الجهاز المناعي بمستضد محوَّر. تتطور ببطء لكن تدوم سنوات بفضل خلايا الذاكرة. للوقاية الطويلة المدى.', keyWords:['سيرم','لقاح','ذاكرة','سريعة','مؤقتة','وقاية'] },
+  ]
+},
+
+// ─────────────────────────────────────────────────────────────────────
+// 4. ARABIC LANGUAGE & LITERATURE
+// ─────────────────────────────────────────────────────────────────────
+arabic: {
+  easy: [
+    { type:'qcm', q:'ما إعراب "الطالبُ" في جملة: "الطالبُ مجتهدٌ"؟', opts:['مبتدأ مرفوع بالضمة','فاعل مرفوع','خبر مرفوع','مفعول به منصوب'], ans:0, exp:'الطالب مبتدأ، ومجتهد خبره. المبتدأ مرفوع وعلامة رفعه الضمة الظاهرة.' },
+    { type:'qcm', q:'ما الفرق بين الفعل المتعدي واللازم؟', opts:['المتعدي يحتاج مفعولاً به، واللازم لا','اللازم متصرف والمتعدي جامد','المتعدي أكثر حروفاً','لا فرق'], ans:0, exp:'الفعل المتعدي ينصب مفعولاً به (ضرب، أكل)، واللازم لا يحتاج مفعولاً به (نام، جلس).' },
+    { type:'qcm', q:'في بيت أبي تمام: "السيفُ أصدقُ إنباءً من الكتبِ" — ما البيان المستخدم؟', opts:['تفضيل مجازي (إنسانية السيف)','تشبيه','كناية','جناس'], ans:0, exp:'استخدام "أصدق إنباءً" للسيف فيه استعارة مكنية (أُضفيت على السيف صفة الإخبار، وهي صفة إنسانية).' },
+    { type:'written', q:'حدد الصور البيانية في البيت التالي مع الشرح: "وللمنية أسبابٌ تُقرِّبها / كما لِرزقِكَ أسبابٌ ومَطالِبُ"', modelAns:'التشبيه: شبّه أسباب المنية (الموت) بأسباب الرزق في أنها محتومة وموجودة دائماً. أداة التشبيه "كما". وجه الشبه: الحتمية. الغرض: تعزية وتقبّل الموت. يوجد أيضاً طباق ضمني بين الموت والرزق.', keyWords:['تشبيه','كما','وجه الشبه','طباق','المنية','الرزق'] },
+    { type:'qcm', q:'أيٌّ من الجمل التالية تحتوي على "حال"؟', opts:['جاء الطالبُ مسرعاً','الطالبُ مسرعٌ','أسرع الطالبُ','طالبٌ مسرعٌ'], ans:0, exp:'"مسرعاً" حال منصوب يُبيّن هيئة صاحبه "الطالب" عند مجيئه.' },
+  ],
+  medium: [
+    { type:'written', q:'[تحليل نص] نص المتنبي: "أنا الذي نظرَ الأعمى إلى أدبي / وأسمعَتْ كلماتي مَن به صَمَمُ". حلل البيت من حيث الأسلوب والصور البيانية والمعنى ومدى صحة ادعاء الشاعر.', modelAns:'الأسلوب: خبر يحمل مبالغة وتحدياً. الصور: "نظر الأعمى" و"أسمعت من به صمم" طباق + مبالغة (hyperbole) في وصف أثر شعره. المعنى: يدّعي أن شعره يتجاوز حدود الحواس. نقد: الادعاء فيه افتخار بالغ يعكس الأنا الشعرية عند المتنبي. من الناحية الجمالية: توازن موسيقي وبنية متقابلة.', keyWords:['طباق','مبالغة','أعمى','صمم','تحدٍ','الأنا'] },
+    { type:'qcm', q:'في المعلقات السبع، صاحب معلقة "قفا نبكِ من ذكرى حبيبٍ ومنزلِ" هو:', opts:['امرؤ القيس','طرفة بن العبد','زهير بن أبي سلمى','لبيد'], ans:0, exp:'مطلع معلقة امرئ القيس الشهيرة. تُعدّ من أعظم قصائد الشعر الجاهلي وقد قيل عنه "أشعر الشعراء".' },
+    { type:'written', q:'اكتب فقرة تحليلية (10 أسطر) حول خصائص الرواية الجزائرية المكتوبة بالعربية مستعيناً بمثال واحد على الأقل.', modelAns:'تتميز الرواية الجزائرية بالعربية بعدة خصائص: 1) الارتباط بالذاكرة التاريخية وثورة التحرير (كروايات مالك حداد وواسيني الأعرج). 2) التشابك بين الهوية العربية الإسلامية والموروث الأمازيغي. 3) انعكاس الجرح الاجتماعي: الفقر، الهجرة، العشرية السوداء. 4) التجريب السردي الحديث مع استلهام التراث. مثال: رواية "الأمير" لواسيني الأعرج تستعيد تاريخ الأمير عبد القادر بأسلوب روائي متطور.', keyWords:['واسيني','ثورة','هوية','تاريخية','سرد','الأمازيغية'] },
+    { type:'qcm', q:'الأداة الصحيحة لنصب المضارع في جملة "يسعدني أنْ _____ معك": ', opts:['أن أدرس','أنّ أدرس','لأدرسَ','لدرسْتُ'], ans:0, exp:'"أن" الحرف المصدري الناصب للمضارع. "يسعدني أن أدرسَ معك".' },
+    { type:'written', q:'قارن بين أسلوب الخطابة عند ابن نباتة المصري وأسلوب النثر الديواني عند ابن خلدون.', modelAns:'ابن نباتة: خطابة دينية وسياسية تعتمد السجع والمحسنات البديعية والتأثير العاطفي. ابن خلدون: نثر علمي موضوعي في المقدمة يعتمد التحليل والمنهج الاستقرائي، بعيد عن الزخرف. الأول للإقناع الوجداني، الثاني للتأصيل المعرفي.', keyWords:['ابن نباتة','ابن خلدون','سجع','علمي','موضوعي','خطابة'] },
+  ],
+  hard: [
+    { type:'written', q:'[بكالوريا — نص أدبي] قال جبران خليل جبران: "لا تقُلْ قد قطعتُ الطريق وإنما قُلْ قد اختصرتُ بعض الطريق، وهذا لكي لا يستريح فيك الكسل." حلّل هذا النص بيانياً وفكرياً.', modelAns:'فكرياً: دعوة إلى التواضع والمثابرة وعدم الاكتفاء بما أُنجز. التوجيه التربوي يصبّ في روح الحكمة العملية. بيانياً: الأسلوب إنشائي (نهي+أمر) يعطي النص طابعاً توجيهياً. الطباق الضمني بين "قطع" و"اختصر". الكناية في "يستريح فيك الكسل". اللغة مباشرة لكنها تحمل عمقاً دلالياً.', keyWords:['نهي','أمر','كناية','طباق','تواضع','المثابرة','جبران'] },
+    { type:'qcm', q:'[بكالوريا] جملة "إن العلمَ لنافعٌ" — ما توكيد مستخدم؟', opts:['إن + لام الابتداء (توكيد مزدوج)','إن وحده','لام التعليل','لام القسم'], ans:0, exp:'"إن" توكيد ابتدائي، و"اللام" في خبرها (لنافع) لام الابتداء الزحلقة ← توكيدان متعاقبان.' },
+    { type:'written', q:'[بكالوريا] اكتب مقالة أدبية حجتية (12-15 سطراً) حول: "التراث الأدبي العربي ثروة إنسانية مشتركة وليس حكراً على العرب."', modelAns:'المقدمة: التراث يتجاوز حدوده المنشئة. الطرح: كلمات عمر الخيام، ألف ليلة وليلة، مقامات الحريري أثّرت في الآداب الغربية والعالمية. حجج: ترجمة الفلسفة العربية أنقذت اليونانية للأوروبيين. شكسبير استلهم "أوثيلو" من حكايات مغاربية. الطب الرازي والقانون لابن سينا أسهما في الطب العالمي. نقيض: لا يعني هذا إلغاء الخصوصية الهوياتية. الخاتمة: التراث جسر بين الحضارات.', keyWords:['تراث','إنساني','ترجمة','ابن سينا','شكسبير','الخيام','حجة'] },
+    { type:'written', q:'[بكالوريا] قيّم مدى نجاح الشعر الجزائري المعاصر في التعبير عن مشاغل المجتمع، مستأنساً بنماذج من أشعار مفدي زكرياء أو الشاعر يوسف وغليسي.', modelAns:'مفدي زكرياء في "اللهب المقدس" وظّف الشعر سلاحاً في الكفاح الوطني. أشعاره جمعت الغنائية والتحريضية. يوسف وغليسي في قصائده استدعى معجماً حداثياً للتعبير عن اغتراب الفرد الجزائري في مجتمع متحول. نجاح الشعر يتجلى في ارتباطه بهوية الأمة، لكن التحدي الراهن هو مواكبة قارئ تغيرت اهتماماته. الشعر لا يزال حياً طالما التزم بالصدق التعبيري.', keyWords:['مفدي','وغليسي','وطني','هوية','حداثة','اغتراب'] },
+  ]
+},
+
+// ─────────────────────────────────────────────────────────────────────
+// 5. FRENCH LANGUAGE
+// ─────────────────────────────────────────────────────────────────────
+french: {
+  easy: [
+    { type:'qcm', q:'Conjuguez le verbe "finir" au passé composé, 3ème personne du pluriel:', opts:['ils ont fini','ils finissaient','ils finissent','ils finiront'], ans:0, exp:'"Finir" est un verbe du 2ème groupe. Passé composé: auxiliaire avoir + participe passé "fini" → ils ont fini.' },
+    { type:'qcm', q:'Dans la phrase "Il faut que tu viennes", le mode du verbe "viennes" est:', opts:['subjonctif','indicatif','conditionnel','impératif'], ans:0, exp:'Après "il faut que", on utilise le subjonctif présent. "Venir" → que tu viennes.' },
+    { type:'written', q:'Expliquez la différence entre "a" (verbe avoir) et "à" (préposition) avec deux exemples.', modelAns:'"A" (sans accent): 3ème personne singulier du verbe avoir. Ex: Il a un livre. On peut remplacer par "avait". "À" (avec accent): préposition de lieu ou de destination. Ex: Je vais à Alger. On ne peut pas remplacer par "avait". Astuce: si le remplacement par "avait" fonctionne → "a" sans accent.', keyWords:['avoir','préposition','avait','accent'] },
+    { type:'qcm', q:'Le contraire de "pédagogue" est:', opts:['incompétent en enseignement','savant','orateur','philosophe'], ans:0, exp:'Un pédagogue est quelqu\'un qui sait transmettre. Son contraire est quelqu\'un sans aptitude à l\'enseignement.' },
+    { type:'qcm', q:'Quelle figure de style est utilisée dans: "La vie est un long fleuve tranquille"?', opts:['Métaphore','Comparaison','Métonymie','Hyperbole'], ans:0, exp:'Métaphore: comparaison sans outil comparatif (sans "comme", "tel"). La vie = un long fleuve tranquille.' },
+  ],
+  medium: [
+    { type:'written', q:'[Texte argumentatif] Rédigez un paragraphe de 10 lignes pour ou contre : "Les réseaux sociaux nuisent aux relations humaines réelles."', modelAns:'Pour: Les réseaux sociaux créent une illusion de proximité. L\'hyper-connexion nuit à la qualité des échanges réels. Des études montrent une augmentation de la solitude chez les grands utilisateurs. Le face-à-face, riche en non-verbal, est irremplaçable. Contre: Ils maintiennent des liens distants impossibles autrement. Pour les timides, ils offrent un espace d\'expression libéré. La communication est une compétence adaptable. Conclusion nuancée: tout dépend de l\'usage.', keyWords:['nuisent','réels','connexion','hyper','solitude','nuancé'] },
+    { type:'qcm', q:'Dans "Il serait venu s\'il avait su", le temps de la subordonnée est:', opts:['plus-que-parfait','imparfait','conditionnel passé','subjonctif imparfait'], ans:0, exp:'Dans un système hypothétique irréel du passé: si + plus-que-parfait → conditionnel passé (principale).' },
+    { type:'written', q:'Analysez le texte suivant (Camus, L\'Étranger): "Aujourd\'hui, maman est morte. Ou peut-être hier, je ne sais pas." Relevez les caractéristiques du style et l\'effet produit.', modelAns:'Style: phrase nominale courte, absence d\'émotion apparente, incertitude temporelle ("peut-être") → détachement total. L\'absurdité camusienne s\'exprime dès la première ligne: le narrateur (Meursault) est incapable d\'émotion conventionnelle. L\'anachronisme "ou peut-être hier" choque. Effet: le lecteur est déstabilisé, l\'anti-héros est établi. Caractéristiques: style dépouillé, narration à la première personne, impassibilité.', keyWords:['absurde','Camus','détachement','Meursault','style','court'] },
+  ],
+  hard: [
+    { type:'written', q:'[BAC] Dissertation: "La littérature coloniale française représente-t-elle fidèlement la réalité algérienne?" Rédigez un plan détaillé avec arguments.', modelAns:'I. Représentation partielle et biaisée: regard orientaliste (Delacroix, Fromentin), vision du colonisateur. L\'Algérien: absent ou folklorisé. II. Quelques tentatives d\'objectivité: Mouloud Feraoun écrit en français pour témoigner de sa réalité. Kateb Yacine subvertit la langue du colonisateur. III. La littérature comme résistance: Albert Memmi (Tunisie), Fanon sur la décolonisation mentale. Conclusion: la "représentation fidèle" est impossible sans le regard algérien lui-même.', keyWords:['orientaliste','colonisateur','Feraoun','Kateb','résistance','fidèle'] },
+    { type:'written', q:'[BAC] Commentez le procédé narratif dans Nedjma de Kateb Yacine: fragmentation temporelle, multiplicité des voix, mythe fondateur. Comment ces choix servent-ils le projet de l\'œuvre?', modelAns:'Kateb Yacine brise la linéarité traditionnelle dans Nedjma (1956). La fragmentation temporelle mime le trauma colonial et la désorientation identitaire. Les voix multiples (Rachid, Mustapha, Lakhdar) refusent un héros unique ← critique de la notion de sujet colonial passif. Nedjma, personnage-mythe, incarne à la fois la femme, l\'Algérie et l\'identité arabe-berbère. Ces procédés modernistes (influence du nouveau roman) font de Nedjma une œuvre fondatrice de la littérature algérienne.', keyWords:['fragmentation','mythe','Nedjma','moderniste','identité','Kateb Yacine','colonial'] },
+  ]
+},
+
+// ─────────────────────────────────────────────────────────────────────
+// 6. ENGLISH LANGUAGE
+// ─────────────────────────────────────────────────────────────────────
+english: {
+  easy: [
+    { type:'qcm', q:'Choose the correct form: "If I ___ rich, I would travel the world."', opts:['were','am','was','had been'], ans:0, exp:'Second conditional (hypothetical): If + past simple (were) → would + infinitive. "Were" is used for all subjects.' },
+    { type:'qcm', q:'Which sentence uses the Present Perfect correctly?', opts:['She has lived here since 2010.','She has lived here since two years.','She lived here since 2010.','She is living here since 2010.'], ans:0, exp:'"Since" + specific point in time + Present Perfect. "For" + duration. Correct: "has lived here since 2010".' },
+    { type:'written', q:'Explain the difference between "affect" (verb) and "effect" (noun) with two examples each.', modelAns:'"Affect" (verb): to influence something. Ex: Stress affects your health. The weather affected our plans. "Effect" (noun): the result/outcome. Ex: The effect of stress is fatigue. Global warming has serious effects. Trick: RAVEN — Remember Affect is a Verb, Effect is a Noun.', keyWords:['verb','noun','affect','effect','influence','result'] },
+    { type:'qcm', q:'The word "euphemism" refers to:', opts:['A mild expression replacing a harsh one','An exaggeration for effect','A comparison using like or as','A play on words'], ans:0, exp:'Euphemism: using a gentle or indirect word to replace something offensive/harsh. E.g., "passed away" instead of "died".' },
+  ],
+  medium: [
+    { type:'written', q:'[BAC Level] Write a discursive essay (12-15 lines): "Social media has done more harm than good to young people\'s mental health." Argue both sides and give your opinion.', modelAns:'Introduction: Social media is ubiquitous among youth. FOR: Studies (NHS, 2023) link excessive use to anxiety and depression. Cyberbullying affects 37% of teens. FOMO (Fear of Missing Out) creates unrealistic comparisons. AGAINST: Platforms provide community for isolated youth (LGBTQ+ groups, rare disease communities). Online activism drives real social change. Social skills can be practiced safely online. OPINION: The issue is regulation and digital literacy, not the technology itself. Conclusion: Balance, not banning, is the solution.', keyWords:['anxiety','cyberbullying','FOMO','community','balance','digital literacy'] },
+    { type:'qcm', q:'In the sentence "Having finished the exam, the students left.", the underlined phrase is:', opts:['Participial phrase (subject: students)','Gerund phrase','Infinitive phrase','Absolute phrase'], ans:0, exp:'A participial phrase acts as an adjective. Here "Having finished" modifies "students" — they finished the exam, then left.' },
+    { type:'written', q:'Analyse this excerpt from George Orwell\'s 1984: "War is Peace. Freedom is Slavery. Ignorance is Strength." What literary and political device is this? What is its effect?', modelAns:'Device: Doublethink / Paradox / Oxymoron used as political propaganda (the Party\'s slogan). Literary effect: each phrase contradicts itself, representing the totalitarian regime\'s power to make people accept contradictions. Orwell warns about the manipulation of language as a tool of political control. "Newspeak" concept: if you control vocabulary, you control thought. Relevance: propaganda techniques in modern authoritarian systems.', keyWords:['paradox','doublethink','propaganda','Orwell','totalitarian','oxymoron','language'] },
+  ],
+  hard: [
+    { type:'written', q:'[BAC] Critically analyze how language itself becomes a tool of oppression in both Orwell\'s 1984 and real-world political contexts.', modelAns:'Orwell\'s "Newspeak" systematically reduces vocabulary to limit subversive thought — fewer words mean fewer revolutionary concepts. Similarly, colonial powers suppressed indigenous languages (e.g., French banning Arabic in Algeria 1830-1962) to dismantle cultural identity. Modern parallels: corporate "downsizing" instead of "firing", "enhanced interrogation" instead of "torture". Language shapes perception (Sapir-Whorf hypothesis). Resistance: reclaiming language (Frantz Fanon, bell hooks). Conclusion: linguistic autonomy is political autonomy.', keyWords:['Newspeak','colonial','Sapir-Whorf','Fanon','reclaim','oppression','resistance'] },
+    { type:'written', q:'[BAC] Write a formal report (200 words) on the impact of brain drain on Algeria\'s development, suggesting three practical solutions.', modelAns:'REPORT: The Impact of Brain Drain on Algeria\'s Development. Introduction: Algeria loses an estimated 5,000+ highly-qualified graduates annually to Western countries. Analysis: Factors include limited research funding, unemployment among graduates, and better opportunities abroad. Consequences: weakened healthcare (doctor shortage), technological dependency, reduced innovation. Solutions: 1) Create research excellence centres with competitive salaries. 2) Facilitate diaspora investment programs — "knowledge transfer" rather than return. 3) Public-private partnerships in tech and medicine to create local opportunities. Conclusion: Brain drain is reversible with political will and structural reforms.', keyWords:['brain drain','graduates','research','diaspora','solutions','Algeria','development'] },
+  ]
+},
+
+// ─────────────────────────────────────────────────────────────────────
+// 7. ISLAMIC STUDIES
+// ─────────────────────────────────────────────────────────────────────
+islamic: {
+  easy: [
+    { type:'qcm', q:'ما اسم الليلة التي نزل فيها القرآن الكريم أول مرة وفي أي سورة ذُكرت؟', opts:['ليلة القدر — سورة القدر','ليلة المعراج — سورة الإسراء','ليلة النصف — سورة البقرة','ليلة البراءة — سورة الدخان'], ans:0, exp:'نزل القرآن في ليلة القدر: "إنا أنزلناه في ليلة القدر". وُصفت في سورة القدر، وهي ليلة خير من ألف شهر.' },
+    { type:'qcm', q:'ما الركن الخامس من أركان الإسلام؟', opts:['الحج','الزكاة','الصوم','الصلاة'], ans:0, exp:'أركان الإسلام الخمسة: الشهادتان، الصلاة، الزكاة، الصوم، الحج. الحج هو الركن الخامس والأخير.' },
+    { type:'written', q:'اشرح مفهوم "الاجتهاد" في الفقه الإسلامي وبيّن شروطه وأهميته في مواجهة المسائل المستحدثة.', modelAns:'الاجتهاد: بذل العالم وسعه لاستنباط حكم شرعي من الأدلة عند غياب نص صريح. شروطه: إتقان العلوم الشرعية (القرآن، الحديث، اللغة، الأصول)، والعدالة، والتمكن من مناهج الاستنباط. أهميته: يُمكّن الفقه من مواجهة النوازل المعاصرة (المعاملات الرقمية، البنوك الإسلامية، الطب الحيوي) ويحقق المقاصد الشرعية.', keyWords:['اجتهاد','استنباط','نوازل','شروط','مقاصد','نص'] },
+    { type:'qcm', q:'حديث "إنما الأعمال بالنيات" رواه:', opts:['البخاري ومسلم','الترمذي وحده','أبو داود','ابن ماجه'], ans:0, exp:'هذا الحديث من أصح الأحاديث وأشهرها. رواه البخاري في أول صحيحه ومسلم في صحيحه.' },
+  ],
+  medium: [
+    { type:'written', q:'[تحليل] قارن بين مصادر التشريع الإسلامي الأربعة: القرآن، السنة، الإجماع، القياس من حيث الحجية والترتيب.', modelAns:'1) القرآن الكريم: أعلى مرتبةً، قاطع الثبوت والدلالة. 2) السنة النبوية: بيان وتخصيص للقرآن، يُشترط صحتها. 3) الإجماع: اتفاق المجتهدين على حكم في عصر من العصور، حجة قاطعة عند الجمهور. 4) القياس: إلحاق الفرع بالأصل في الحكم لاشتراكهما في العلة. الترتيب عند التعارض يبدأ بالقرآن ثم السنة ثم الإجماع ثم القياس.', keyWords:['قرآن','سنة','إجماع','قياس','علة','مجتهد','حجية'] },
+    { type:'qcm', q:'ما الفرق بين "الواجب" و"الفرض" عند الحنفية؟', opts:['الفرض ثابت بقطعي، والواجب بدليل ظني','كلاهما متساويان','الواجب أعلى من الفرض','الفرض مكروه والواجب مندوب'], ans:0, exp:'عند الحنفية: الفرض ثابت بدليل قطعي الثبوت والدلالة (كآيات قرآنية صريحة)، والواجب بدليل ظني. إنكار الفرض كفر، وترك الواجب فسق.' },
+    { type:'written', q:'ناقش مقصد "حفظ النفس" من المقاصد الخمسة الكبرى للشريعة الإسلامية في ضوء القضايا المعاصرة (الإجهاض، عقوبة الإعدام، الانتحار).', modelAns:'حفظ النفس: من أعلى المقاصد الضرورية. يُفيد: تحريم القتل والانتحار وإلزام بالتداوي. الإجهاض: حرام بعد نفخ الروح (120 يوماً) جمهوراً، وقبله خلاف. الإعدام: عقوبة شرعية لجرائم محددة ليست منافية للمقصد لأنها حماية للنفس الجماعية. الانتحار: محرم قطعاً لأنه اعتداء على نفس أودعها الله. المقاصد تُوازن بين المصالح الفردية والجماعية.', keyWords:['حفظ النفس','إجهاض','انتحار','إعدام','مقاصد','ضروريات'] },
+  ],
+  hard: [
+    { type:'written', q:'[بكالوريا] ناقش إشكالية "العلاقة بين العقل والنقل" في الفكر الإسلامي، مستشهداً بمواقف ابن رشد وابن تيمية.', modelAns:'ابن رشد (الرشدية): العقل والنقل لا يتعارضان لأنهما من مصدر واحد (الله). عند الظاهر التعارض، نؤول النص. الفلسفة أداة لفهم الدين. ابن تيمية: العقل الصريح والنقل الصحيح لا يتناقضان. لكنه يرفض التأويل المفرط ويضع النقل فوق العقل عند الخلاف. الإشكالية: كيف نتعامل مع النصوص المتعارضة مع العلوم الحديثة؟ التوفيقيون الجدد (محمد عبده، الشاطبي) يرون في المقاصد مخرجاً.', keyWords:['ابن رشد','ابن تيمية','العقل','النقل','تأويل','مقاصد','توفيق'] },
+    { type:'written', q:'[بكالوريا] ما حكم التعامل بالعملات الرقمية (Bitcoin) في ضوء مقاصد الشريعة والفقه المالي الإسلامي؟ قدم دراسة فقهية مقارنة.', modelAns:'القائلون بالتحريم: غرر (عدم يقين القيمة)، مضاربة مشبهة للميسر، لا قيمة ذاتية، لا يحقق وظيفة النقد في حفظ القيمة. القائلون بالإباحة: هي عملة تعاقدية يرضى بها المتبادلون، كالعملات الورقية الحديثة. القائلون بالإباحة بضوابط: تجنب المضاربة الخالصة والغرر الفاحش. رأيي: المسألة اجتهادية تعتمد على طبيعة الاستخدام. المعيار الشرعي للإسناد الإسلامي في المعيار رقم 31 يُميل إلى التحريم حالياً.', keyWords:['غرر','ميسر','Bitcoin','اجتهاد','مقاصد','تحريم','ضوابط'] },
+  ]
+},
+
+// ─────────────────────────────────────────────────────────────────────
+// 8. HISTORY & GEOGRAPHY
+// ─────────────────────────────────────────────────────────────────────
+history: {
+  easy: [
+    { type:'qcm', q:'متى اندلعت الثورة الجزائرية التحريرية؟', opts:['1 نوفمبر 1954','1 نوفمبر 1952','19 مارس 1962','5 جويلية 1962'], ans:0, exp:'اندلعت ثورة التحرير في الفاتح من نوفمبر 1954 (ليلة الثورة). مرسوم الاستقلال كان 5 جويلية 1962.' },
+    { type:'qcm', q:'ما الإمبراطورية التي كانت تُسيطر على الجزء الأكبر من أوروبا قبل عام 1914؟', opts:['الإمبراطورية النمساوية المجرية','الإمبراطورية العثمانية','الإمبراطورية البريطانية','الإمبراطورية الروسية'], ans:0, exp:'النمساو-مجر كانت إمبراطورية واسعة في وسط أوروبا، ومن أسباب اندلاع الحرب العالمية الأولى (اغتيال ولي عهدها).' },
+    { type:'written', q:'اشرح النتائج المباشرة لاتفاقية إيفيان (1962) على الجزائر.', modelAns:'اتفاقية إيفيان (18 مارس 1962): أوقفت إطلاق النار بين فرنسا وجبهة التحرير الوطني. نتائجها: 1) الاعتراف الدولي بحق الجزائر في الاستقلال. 2) إجراء استفتاء تقرير المصير (1 جويلية 1962). 3) الاستقلال الرسمي في 5 جويلية 1962. 4) معالجة مسألة الأقليات الأوروبية. 5) تأسيس الجمهورية الجزائرية الديمقراطية الشعبية.', keyWords:['إيفيان','استقلال','استفتاء','1962','وقف إطلاق النار','جبهة التحرير'] },
+    { type:'qcm', q:'أي من الدول التالية لم تكن من الدول المنتصرة في الحرب العالمية الثانية؟', opts:['إيطاليا','فرنسا','الاتحاد السوفيتي','بريطانيا'], ans:0, exp:'إيطاليا بدأت مع دول المحور (ألمانيا، اليابان) ثم تحولت لصف الحلفاء 1943، لكنها ليست من الدول المنتصرة الكبرى.' },
+  ],
+  medium: [
+    { type:'written', q:'[تحليل] حلل أسباب الحرب الباردة (1947-1991) على ثلاثة مستويات: أيديولوجي، اقتصادي، استراتيجي.', modelAns:'أيديولوجي: تعارض الرأسمالية الليبرالية (أمريكا) والشيوعية (السوفييت) — نموذجان حضاريان متصادمان. اقتصادي: أمريكا تريد أسواقاً مفتوحة (مشروع مارشال)، السوفييت يريدون منطقة نفوذ اقتصادية. استراتيجي: حرب النجوم، سباق التسلح النووي، مبدأ الردع المتبادل MAD. المحور: لم تكن حرباً مسلحة مباشرة بل صراع تجسس وحروب وكيلة (كوريا، فيتنام).', keyWords:['أيديولوجي','رأسمالية','شيوعية','مارشال','تسلح','نووي','وكيلة'] },
+    { type:'qcm', q:'مؤتمر باندونغ (1955) تأسست فيه حركة:', opts:['عدم الانحياز','الناتو','حلف وارسو','الكومنترن'], ans:0, exp:'مؤتمر باندونغ (إندونيسيا، 1955) جمع دول آسيا وأفريقيا لإرساء مبادئ عدم الانحياز في الحرب الباردة.' },
+    { type:'written', q:'[جغرافيا الجزائر] حلل توزيع السكان في الجزائر وأسبابه الجغرافية والتاريخية.', modelAns:'التوزيع: 85-90% من السكان يتمركزون في الشمال (الساحل، الهضاب، الأطلس). الجنوب (الصحراء = 80% من المساحة) يضم أقل من 10% من السكان. الأسباب الجغرافية: ملاءمة المناخ للزراعة في الشمال. الأسباب التاريخية: المراكز الحضارية القديمة (قسنطينة، تلمسان، الجزائر). الاقتصادية: تمركز الصناعة والخدمات. التحدي: الإسكان، الضغط الحضاري، توجيه التنمية للجنوب.', keyWords:['شمال','صحراء','تمركز','هجرة','مناخ','حضري'] },
+    { type:'written', q:'قيّم دور جامعة الدول العربية في حل النزاعات العربية العربية، مع مثالين.', modelAns:'جامعة الدول العربية (1945) تأسست لتعزيز التعاون العربي. إيجابيات: دور في النزاع اليمني 2011-2015، وساطة في لبنان (اتفاق الطائف 1989). سلبيات: عجزت عن حل نزاع الصحراء الغربية، فشلت في وقف الحروب الأهلية (ليبيا، سوريا)، التدخل محدود بمبدأ السيادة. الخلاصة: مؤسسة ذات أدوات محدودة في ظل انقسامات عربية عميقة.', keyWords:['جامعة عربية','الطائف','سيادة','فشل','وساطة','انقسامات'] },
+  ],
+  hard: [
+    { type:'written', q:'[بكالوريا] "الثورة الجزائرية كانت حرباً بالوكالة في إطار الحرب الباردة أكثر من كونها نضالاً وطنياً خالصاً." ناقش هذه المقولة.', modelAns:'الرأي المعارض: الثورة جذورها الراسخة في الوعي الوطني (مشيخة الحقيقة، مصالي الحاج، ثورة 1871). جبهة التحرير رفضت الارتباط بأي قطب. الرأي المؤيد: الاتحاد السوفيتي دعم جبهة التحرير في الأمم المتحدة. مصر الناصرية (موالية للمعسكر العربي القومي) موّلت ودعّمت. أمريكا ضغطت على فرنسا لاعتبارات استراتيجية. التركيب: الثورة وطنية بامتياز لكنها لم تكن في فراغ دولي. توظيف الصراع الدولي لصالح قضية وطنية هو ذكاء سياسي لا ضعف.', keyWords:['وطنية','حرب باردة','بالوكالة','ناصر','سوفييت','جبهة التحرير','مصالي'] },
+    { type:'written', q:'[بكالوريا — جغرافيا] اكتب مقالاً جغرافياً حول: "الجزائر وإشكاليات الأمن المائي في القرن الحادي والعشرين."', modelAns:'الإشكالية: الجزائر ذات مناخ جاف نصف جاف على معظم أراضيها. الموارد: المياه السطحية (أودية الشمال)، المياه الجوفية (الساحل، الصحراء — الطبقة الحرة الجنوبية تحتوي على 40000 مليار م³). التحديات: نمو ديموغرافي + تغير مناخي + فقدان الغطاء النباتي. الحلول المطبقة: تحلية مياه البحر (24 محطة)، حصاد الأمطار، معالجة المياه المستعملة، ربط شبكات. الاستدامة: ضرورة التوعية باستهلاك المياه وتسعير حقيقي وعادل.', keyWords:['أمن مائي','جوفية','تحلية','مناخ','صحراء','تحديات','استدامة'] },
+    { type:'qcm', q:'[بكالوريا] مبدأ مونرو (1823) يعني:', opts:['عدم تدخل أوروبا في شؤون الأمريكيتين مقابل عدم التدخل الأمريكي في أوروبا','حرية الملاحة في المحيطات','مبدأ الردع النووي','حق الشعوب في تقرير المصير'], ans:0, exp:'مبدأ مونرو (الرئيس الأمريكي جيمس مونرو): الأمريكيتان منطقة نفوذ أمريكية، تحذير لأوروبا من التدخل فيهما.' },
+    { type:'written', q:'[بكالوريا] حلل مسار التكامل الاقتصادي الأفريقي (الاتحاد الأفريقي) مقارنةً بالتجربة الأوروبية، مع تقييم إمكانات وعوائق التكامل.', modelAns:'التجربة الأوروبية: تدرجت من CECA (1951) إلى EEC (1957) إلى EU (1993) وصولاً لليورو (2002). مرتكزاتها: السوق الموحدة، الحدود المفتوحة، مؤسسات فوق وطنية. الاتحاد الأفريقي (2002): يسعى لعملة موحدة 2034، منطقة تجارة حرة ZLECAF (2021). العوائق الأفريقية: التباين الهيكلي الاقتصادي، سيادة الهويات الوطنية الهشة، التدخل الأجنبي، ضعف البنية التحتية. الإمكانات: أكبر سوق موحدة بالعالم، ثروات طبيعية ضخمة، نمو ديموغرافي.', keyWords:['ZLECAF','الاتحاد الأفريقي','EU','تكامل','عوائق','سوق موحدة','يورو'] },
+  ]
+}
+
+}; // end QUESTIONS
+
+// ════════════════════════════════════════════════════════════════════
+//  SUBJECTS METADATA
+// ════════════════════════════════════════════════════════════════════
+const SUBJECTS = [
+  { key:'math',    name:'الرياضيات',        icon:'📐', color:'#00B4A6', desc:'تحليل، تفاضل وتكامل، احتمالات، جبر' },
+  { key:'physics', name:'فيزياء وكيمياء',   icon:'⚛️', color:'#6C63FF', desc:'ميكانيك، كهرباء، كيمياء تحليلية' },
+  { key:'sciences',name:'علوم طبيعية',      icon:'🧬', color:'#52E5A0', desc:'خلية، وراثة، مناعة، بيولوجيا' },
+  { key:'arabic',  name:'اللغة العربية',    icon:'📖', color:'#F5C842', desc:'نحو، بلاغة، أدب، نقد، تعبير' },
+  { key:'french',  name:'اللغة الفرنسية',   icon:'🇫🇷', color:'#FF6B6B', desc:'grammaire, littérature, argumentation' },
+  { key:'english', name:'اللغة الإنجليزية', icon:'🇬🇧', color:'#4ECDC4', desc:'Grammar, literature, essay writing' },
+  { key:'islamic', name:'التربية الإسلامية',icon:'☪️',  color:'#C9A84C', desc:'فقه، عقيدة، حديث، تشريع' },
+  { key:'history', name:'تاريخ وجغرافيا',   icon:'🌍', color:'#FF9F43', desc:'ثورة الجزائر، الحرب الباردة، جغرافيا' },
+];
+
+// ════════════════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════════════════
+let state = {
+  page: 'home',
+  subject: null,
+  level: null,
+  questions: [],
+  current: 0,
+  answers: [],
+  score: 0,
+  total: 0,
+  sessionResults: [],
+};
+
+let globalScore = parseInt(localStorage.getItem('bac_total_score') || '0');
+let allResults  = JSON.parse(localStorage.getItem('bac_results') || '[]');
+
+// ════════════════════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════════════════════
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  state.page = p;
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  HOME — render subjects
+// ════════════════════════════════════════════════════════════════════
+function renderSubjects() {
+  const grid = document.getElementById('subjects-grid');
+  grid.innerHTML = SUBJECTS.map(s => {
+    const pool = QUESTIONS[s.key];
+    const total = (pool.easy?.length||0)+(pool.medium?.length||0)+(pool.hard?.length||0);
+    return `
+      <div class="subject-card" style="--card-color:${s.color}" onclick="selectSubject('${s.key}')">
+        <div class="subject-count">${total} سؤال</div>
+        <div class="subject-icon" style="background:${s.color}22">${s.icon}</div>
+        <div class="subject-name">${s.name}</div>
+        <div class="subject-meta">${s.desc}</div>
+      </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  SELECT SUBJECT → show level page
+// ════════════════════════════════════════════════════════════════════
+function selectSubject(key) {
+  state.subject = key;
+  const subj = SUBJECTS.find(s=>s.key===key);
+  const pool  = QUESTIONS[key];
+
+  document.getElementById('level-subject-icon').textContent = subj.icon;
+  document.getElementById('level-subject-name').textContent = subj.name;
+  document.getElementById('lc-easy').textContent   = (pool.easy?.length||0)+' سؤال';
+  document.getElementById('lc-medium').textContent = (pool.medium?.length||0)+' سؤال';
+  document.getElementById('lc-hard').textContent   = (pool.hard?.length||0)+' سؤال';
+
+  showPage('level');
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  START QUIZ
+// ════════════════════════════════════════════════════════════════════
+function startQuiz(level) {
+  state.level    = level;
+  const pool     = [...(QUESTIONS[state.subject][level] || [])];
+  // Shuffle
+  pool.sort(() => Math.random() - 0.5);
+  state.questions = pool;
+  state.current   = 0;
+  state.answers   = [];
+  state.score     = 0;
+  state.total     = pool.length;
+  state.sessionResults = [];
+
+  const subj = SUBJECTS.find(s=>s.key===state.subject);
+  document.getElementById('qh-subject').textContent = subj.name;
+  const lvlMap = { easy:'سهل', medium:'متوسط', hard:'🔥 بكالوريا' };
+  const lvlClass = { easy:'badge-easy', medium:'badge-medium', hard:'badge-hard' };
+  const qhLevel = document.getElementById('qh-level');
+  qhLevel.textContent = lvlMap[level];
+  qhLevel.className = 'meta-badge ' + lvlClass[level];
+
+  showPage('quiz');
+  renderQuestion();
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER QUESTION
+// ════════════════════════════════════════════════════════════════════
+function renderQuestion() {
+  const q   = state.questions[state.current];
+  const idx = state.current;
+  const total = state.total;
+
+  // Progress
+  const pct = Math.round(((idx) / total) * 100);
+  document.getElementById('qh-progress').textContent = `${idx+1} / ${total}`;
+  document.getElementById('qh-bar').style.width = pct + '%';
+
+  let bodyHTML = '';
+
+  if (q.type === 'qcm') {
+    const letters = ['أ','ب','ج','د','هـ'];
+    bodyHTML = `
+      <div class="question-type">
+        <span>⊙</span> سؤال اختيار من متعدد
+      </div>
+      <div class="question-header">
+        <div class="question-num">${idx+1}</div>
+        <div class="question-text" style="margin-right:12px">${q.q}</div>
+      </div>
+      ${q.doc ? `<div class="doc-box"><div class="doc-box-label">📄 وثيقة</div>${q.doc}</div>` : ''}
+      <ul class="options-list">
+        ${q.opts.map((opt,i) => `
+          <li class="option-item" id="opt-${idx}-${i}" onclick="selectQCM(${idx},${i})">
+            <span class="option-letter">${letters[i]}</span>
+            <span>${opt}</span>
+          </li>`).join('')}
+      </ul>
+      <div class="feedback-card" id="feedback-${idx}"></div>
+      <div class="action-row" id="actions-${idx}">
+        <button class="btn btn-teal" onclick="submitQCM(${idx})">✓ تحقق من الإجابة</button>
+      </div>`;
+
+  } else { // written
+    bodyHTML = `
+      <div class="question-type">
+        <span>✏️</span> سؤال مفتوح — تحليل وتعبير
+      </div>
+      <div class="question-header">
+        <div class="question-num">${idx+1}</div>
+        <div class="question-text" style="margin-right:12px">${q.q}</div>
+      </div>
+      ${q.doc ? `<div class="doc-box"><div class="doc-box-label">📄 وثيقة</div>${q.doc}</div>` : ''}
+      <div class="written-wrap">
+        <textarea class="written-input" id="written-${idx}" placeholder="اكتب إجابتك هنا بأسلوبك الخاص..."></textarea>
+        <div class="written-hint">💡 اكتب أفكارك الرئيسية ثم قارن مع نموذج الإجابة</div>
+      </div>
+      <div class="feedback-card" id="feedback-${idx}"></div>
+      <div class="action-row" id="actions-${idx}">
+        <button class="btn btn-teal" onclick="submitWritten(${idx})">📋 مقارنة مع النموذج</button>
+      </div>`;
+  }
+
+  document.getElementById('quiz-body').innerHTML = `<div class="question-card">${bodyHTML}</div>`;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  QCM INTERACTION
+// ════════════════════════════════════════════════════════════════════
+let qcmSelected = null;
+
+function selectQCM(qi, oi) {
+  const q = state.questions[qi];
+  if (state.answers[qi] !== undefined) return; // already submitted
+  qcmSelected = oi;
+  q.opts.forEach((_, i) => {
+    const el = document.getElementById(`opt-${qi}-${i}`);
+    if (el) el.classList.toggle('selected', i === oi);
+  });
+}
+
+function submitQCM(qi) {
+  if (qcmSelected === null) { showToast('⚠️ اختر إجابة أولاً'); return; }
+  const q = state.questions[qi];
+  const chosen = qcmSelected;
+  state.answers[qi] = chosen;
+  const correct = chosen === q.ans;
+  if (correct) state.score++;
+
+  q.opts.forEach((_, i) => {
+    const el = document.getElementById(`opt-${qi}-${i}`);
+    if (!el) return;
+    el.classList.remove('selected');
+    if (i === q.ans) el.classList.add('correct');
+    else if (i === chosen && !correct) el.classList.add('wrong');
+    el.onclick = null;
+  });
+
+  const fb = document.getElementById(`feedback-${qi}`);
+  fb.className = `feedback-card ${correct ? 'correct-fb' : 'wrong-fb'} show`;
+  fb.innerHTML = `
+    <div class="feedback-header ${correct ? 'c' : 'w'}">
+      ${correct ? '✔ إجابة صحيحة!' : '✘ إجابة خاطئة'}
+    </div>
+    <div class="feedback-body">
+      ${!correct ? `<strong>الإجابة الصحيحة: ${q.opts[q.ans]}</strong><br>` : ''}
+      ${q.exp}
+    </div>`;
+
+  state.sessionResults.push({ q: q.q, correct, type: 'qcm' });
+  showNextActions(qi);
+  qcmSelected = null;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  WRITTEN INTERACTION
+// ════════════════════════════════════════════════════════════════════
+function submitWritten(qi) {
+  const q = state.questions[qi];
+  const userAns = (document.getElementById(`written-${qi}`)?.value || '').trim();
+
+  if (!userAns) { showToast('✏️ اكتب إجابتك أولاً'); return; }
+
+  // Flexible matching: check if key words are present
+  const kw = q.keyWords || [];
+  const matchCount = kw.filter(k => userAns.includes(k) || userAns.toLowerCase().includes(k.toLowerCase())).length;
+  const matchRatio = kw.length > 0 ? matchCount / kw.length : 0;
+
+  let quality, qualityClass, pts;
+  if (matchRatio >= 0.6) { quality = 'جيد جداً 🌟 — إجابتك تغطي أغلب النقاط الجوهرية'; qualityClass = 'correct-fb'; pts = 1; state.score++; }
+  else if (matchRatio >= 0.3) { quality = 'متوسط 💡 — راجع النقاط الناقصة'; qualityClass = 'info-fb'; pts = 0.5; state.score += 0.5; }
+  else { quality = 'تحتاج مراجعة ❌ — راجع الدرس وحاول مجدداً'; qualityClass = 'wrong-fb'; pts = 0; }
+
+  state.answers[qi] = userAns;
+
+  const fb = document.getElementById(`feedback-${qi}`);
+  fb.className = `feedback-card ${qualityClass} show`;
+  fb.innerHTML = `
+    <div class="feedback-header ${pts>=1?'c':pts>0?'i':'w'}">
+      تقييم إجابتك: ${quality}
+    </div>
+    <div class="feedback-body">
+      <strong>نموذج الإجابة الكاملة:</strong>
+      <div class="model-answer">${q.modelAns}</div>
+      ${kw.length>0 ? `<div style="margin-top:10px;font-size:0.8rem">الكلمات المفتاحية المطلوبة: <strong>${kw.join(' — ')}</strong></div>` : ''}
+    </div>`;
+
+  state.sessionResults.push({ q: q.q, correct: pts >= 0.6, type: 'written' });
+  showNextActions(qi);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  NEXT ACTIONS
+// ════════════════════════════════════════════════════════════════════
+function showNextActions(qi) {
+  const actRow = document.getElementById(`actions-${qi}`);
+  const isLast = (state.current + 1) >= state.total;
+  actRow.innerHTML = isLast
+    ? `<button class="btn btn-gold" onclick="showResults()">📊 عرض النتائج</button>`
+    : `<button class="btn btn-teal" onclick="nextQuestion()">التالي ←</button>
+       <button class="btn btn-ghost" onclick="showResults()">إنهاء مبكر</button>`;
+}
+
+function nextQuestion() {
+  state.current++;
+  qcmSelected = null;
+  renderQuestion();
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RESULTS
+// ════════════════════════════════════════════════════════════════════
+function showResults() {
+  const s = state;
+  const answered = s.answers.filter(a=>a!==undefined).length;
+  const pct = answered > 0 ? Math.round((s.score / answered) * 100) : 0;
+  const subj = SUBJECTS.find(sub=>sub.key===s.subject);
+  const lvlMap = { easy:'سهل', medium:'متوسط', hard:'بكالوريا' };
+
+  let trophy='😐', msg='';
+  if (pct>=85){ trophy='🏆'; msg='نتيجة ممتازة! أنت على المسار الصحيح للبكالوريا.'; }
+  else if (pct>=70){ trophy='🌟'; msg='جيد جداً! بعض الجهد الإضافي سيوصلك للقمة.'; }
+  else if (pct>=50){ trophy='💪'; msg='مقبول، لكن هناك مجال كبير للتحسن. راجع الأخطاء.'; }
+  else { trophy='📚'; msg='تحتاج إلى مراجعة معمّقة للمحاور التي أخطأت فيها.'; }
+
+  const correct = Math.round(s.score);
+  const wrong   = answered - correct;
+  const skipped = s.total - answered;
+
+  // Save to storage
+  globalScore += correct;
+  localStorage.setItem('bac_total_score', globalScore);
+  document.getElementById('nav-score').textContent = globalScore;
+  allResults.push({
+    subject: subj.name, level: lvlMap[s.level],
+    score: pct, date: new Date().toLocaleDateString('ar-DZ')
+  });
+  if (allResults.length > 50) allResults.shift();
+  localStorage.setItem('bac_results', JSON.stringify(allResults));
+
+  document.getElementById('results-body').innerHTML = `
+    <div class="result-trophy">${trophy}</div>
+    <div class="result-title">${subj.icon} ${subj.name} — ${lvlMap[s.level]}</div>
+    <div class="result-grade">${pct}%</div>
+    <div class="result-msg">${msg}<br><small style="color:var(--text3)">(${s.score} نقطة من ${answered} سؤال أجبت عنه)</small></div>
+    <div class="result-breakdown">
+      <div class="rb-card"><div class="rb-val c">${correct}</div><div class="rb-label">صحيح</div></div>
+      <div class="rb-card"><div class="rb-val w">${wrong}</div><div class="rb-label">خطأ</div></div>
+      <div class="rb-card"><div class="rb-val s">${skipped}</div><div class="rb-label">لم يُجب</div></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-teal" onclick="startQuiz('${s.level}')">🔄 إعادة المحاولة</button>
+      <button class="btn btn-ghost" onclick="selectSubject('${s.subject}')">تغيير المستوى</button>
+      <button class="btn btn-gold" onclick="showPage('home')">🏠 الرئيسية</button>
+    </div>`;
+
+  showPage('results');
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  SCOREBOARD
+// ════════════════════════════════════════════════════════════════════
+function showScoreboard() {
+  const el = document.getElementById('scoreboard-section');
+  const content = document.getElementById('sb-content');
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior:'smooth' });
+
+  if (allResults.length === 0) {
+    content.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px">لا توجد نتائج بعد — ابدأ أول تمرين!</div>';
+    return;
+  }
+  content.innerHTML = [...allResults].reverse().slice(0,10).map(r => `
+    <div class="sb-row">
+      <span class="sb-subj">${r.subject} (${r.level})</span>
+      <span style="color:var(--text3);font-size:0.78rem">${r.date}</span>
+      <div class="sb-scores">
+        <span class="sb-badge" style="background:${r.score>=70?'rgba(82,229,160,0.15)':'rgba(255,107,107,0.12)'};color:${r.score>=70?'var(--easy)':'var(--coral)'}">${r.score}%</span>
+      </div>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  CONFIRM EXIT
+// ════════════════════════════════════════════════════════════════════
+function confirmExit() {
+  if (confirm('هل تريد الخروج؟ ستُفقد إجاباتك الحالية.')) {
+    showPage('home');
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  TOAST
+// ════════════════════════════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════════════
+renderSubjects();
+document.getElementById('nav-score').textContent = globalScore;
+
+// Stagger subject cards
+document.querySelectorAll('.subject-card').forEach((c,i) => {
+  c.style.opacity = '0';
+  c.style.transform = 'translateY(20px)';
+  setTimeout(() => {
+    c.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    c.style.opacity = '1';
+    c.style.transform = 'translateY(0)';
+  }, 100 + i*60);
+});
+</script>
+</body>
+</html>
